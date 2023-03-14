@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name" translatable="false">ToDo list</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="home_fragment_label">Home</string>
+    <string name="add_item_fragment_label">Add Item</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="add">add</string>
+    <string name="save">Save</string>
+</resources>

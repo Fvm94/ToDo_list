@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ToDo list</string>
+    <string name="action_settings">Configurações</string>
+    <string name="home_fragment_label">Início</string>
+    <string name="add_item_fragment_label">Adicionar</string>
+    <string name="next">Próximo</string>
+    <string name="previous">Anterior</string>
+    <string name="add">Adicionar</string>
+    <string name="save">Salvar</string>
+</resources>

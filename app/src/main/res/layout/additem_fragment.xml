@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    tools:context=".AddItemFragment">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/add_textinput_layout"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/add"
+        app:hintTextColor="@color/material_dynamic_tertiary50"
+        app:boxStrokeColor="@color/material_dynamic_tertiary50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/add_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusedByDefault="true"
+            android:textSize="20sp"
+            android:inputType="textCapWords"
+            android:textColor="@color/material_dynamic_neutral90"
+            android:imeOptions="actionGo"
+            android:singleLine="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/outlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/save"
+        android:textSize="20sp"
+        app:icon="@drawable/ic_save_24dp"
+        app:iconTint="@color/material_dynamic_neutral90"
+        app:strokeColor="@color/material_dynamic_tertiary50"
+        app:backgroundTint="@color/material_dynamic_neutral30"
+        android:textColor="@color/material_dynamic_neutral90"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_textinput_layout" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
