@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -17,9 +18,6 @@ import com.franciscovm.todolist.databinding.FragmentHomeBinding
 import com.franciscovm.todolist.ui.ItemAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class HomeFragment : Fragment() {
 
     private val viewModel: InventoryViewModel by activityViewModels {
@@ -31,8 +29,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     lateinit var item: Item
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -53,6 +50,7 @@ class HomeFragment : Fragment() {
         binding.homeRecyclerview.adapter = adapter
         viewModel.allItems.observe(this.viewLifecycleOwner) {
             it.let {
+                binding.homeNote.isVisible = it.isEmpty()
                 adapter.submitList(it)
             }
         }
