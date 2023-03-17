@@ -16,7 +16,6 @@ import com.franciscovm.todolist.data.InventoryViewModelFactory
 import com.franciscovm.todolist.data.Item
 import com.franciscovm.todolist.databinding.FragmentHomeBinding
 import com.franciscovm.todolist.ui.ItemAdapter
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class HomeFragment : Fragment() {
 
@@ -47,7 +46,7 @@ class HomeFragment : Fragment() {
 
         val adapter = ItemAdapter()
 
-        binding.homeRecyclerview.adapter = adapter
+
         viewModel.allItems.observe(this.viewLifecycleOwner) {
             it.let {
                 binding.homeNote.isVisible = it.isEmpty()
@@ -55,11 +54,13 @@ class HomeFragment : Fragment() {
             }
         }
 
-        binding.homeRecyclerview.layoutManager =
-            LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-
-        binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        binding.apply {
+            homeRecyclerview.adapter = adapter
+            homeRecyclerview.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            fab.setOnClickListener {
+                findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            }
         }
 
         ItemTouchHelper(object :
@@ -83,17 +84,17 @@ class HomeFragment : Fragment() {
 
     }
 
-   /* private fun showConfirmationDialog() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Deletar?")
-            .setMessage("Você esta certo que quer deletar ${item.item}?")
-            .setCancelable(false)
-            .setNegativeButton("Nâo") { _, _ -> }
-            .setPositiveButton("Sim") { _, _ ->
-                deleteItem()
-            }
-            .show()
-    }*/
+    /* private fun showConfirmationDialog() {
+         MaterialAlertDialogBuilder(requireContext())
+             .setTitle("Deletar?")
+             .setMessage("Você esta certo que quer deletar ${item.item}?")
+             .setCancelable(false)
+             .setNegativeButton("Nâo") { _, _ -> }
+             .setPositiveButton("Sim") { _, _ ->
+                 deleteItem()
+             }
+             .show()
+     }*/
 
 
     private fun deleteItem() {

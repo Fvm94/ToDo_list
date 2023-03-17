@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "51520918696",
+    "project_id": "todo-list-fvm",
+    "storage_bucket": "todo-list-fvm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:51520918696:android:83de73ffb8649ddb295e9d",
+        "android_client_info": {
+          "package_name": "com.franciscovm.todolist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "51520918696-puenqdi6pm95v3s3bvuk5iueepfiaul8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.franciscovm.todolist",
+            "certificate_hash": "5bb4d566e6c7d0f540ee8441aa2ca12e215ebee7"
+          }
+        },
+        {
+          "client_id": "51520918696-tdm6ten3o16muci9nfa5t78v0term3tp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3c_wroPAh2oO6iG0UTreo64K9VZgjTHE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "51520918696-tdm6ten3o16muci9nfa5t78v0term3tp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
