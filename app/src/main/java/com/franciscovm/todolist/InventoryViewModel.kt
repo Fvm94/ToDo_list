@@ -1,49 +1,66 @@
-package com.franciscovm.todolist.data
+package com.franciscovm.todolist
 
-import androidx.lifecycle.*
+import android.content.Context
+import android.util.Log
+import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.franciscovm.todolist.data.Item
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
-class InventoryViewModel(private val dao: Dao):ViewModel() {
+private const val error_tag = "ViewModelError"
 
-    private fun insertItem(item:Item){
+class InventoryViewModel() : ViewModel() {
+
+    private val fireStore = Firebase.firestore.collection("user")
+    private var list: MutableLiveData<List<Item>> = MutableLiveData()
+
+    val queryDirection = Query.Direction.ASCENDING
+    val fieldFilter = "date"
+
+    val lista: LiveData<List<Item>> = getFromFirebase()
+    private fun getFromFirebase(): LiveData<List<Item>> {
         viewModelScope.launch {
-            dao.insert(item)
+            fireStore.orderBy(fieldFilter, queryDirection)
+                .addSnapshotListener { value, error ->
+                    if (error != null) {
+                        Log.e(error_tag, error.message.toString())
+                    }
+                    list.value = value!!.toObjects(Item::class.java)
+                }
+
         }
+        return list
     }
 
-    fun deleteItem(item: Item){
-        viewModelScope.launch {
-            dao.delete(item)
+    private fun addToFirebase(item: Item, context: Context) {
+        fireStore.document(item.path).set(item).addOnSuccessListener {
+            Toast.makeText(context, "Saved on Firebase", Toast.LENGTH_SHORT).show()
         }
+
     }
 
-    val allItems = dao.getItems().asLiveData()
+    private fun getEntryToFirebase(note: String): Item {
 
-    private fun getNewWEntry(item:String):Item{
-        return Item(
-             item = item)
+        val formatData = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val current = LocalDateTime.now().format(formatData)
+
+        return Item(current, note, fireStore.document().id)
     }
 
-    fun addNewEntry(item: String) = insertItem(getNewWEntry(item))
-    fun isEntryValid(text: String): Boolean {
-        if(text.isBlank()){
-            return false
-        }
-        return true
+    fun saveOnFirebase(note: String, context: Context) {
+        addToFirebase(getEntryToFirebase(note), context)
     }
 
-
-    fun retrieveItem(id: Int): LiveData<Item>{
-        return dao.getItem(id).asLiveData()
+    fun isEntryValid(noteText: String): Boolean {
+        return noteText.isNotEmpty()
     }
 
-}
-class InventoryViewModelFactory(private val dao: Dao):ViewModelProvider.Factory{
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(InventoryViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return InventoryViewModel(dao) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
 }

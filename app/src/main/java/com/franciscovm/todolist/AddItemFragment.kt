@@ -7,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia.ImageAndVideo.equals
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.franciscovm.todolist.data.InventoryViewModel
-import com.franciscovm.todolist.data.InventoryViewModelFactory
+import androidx.navigation.fragment.navArgs
 import com.franciscovm.todolist.data.Item
 import com.franciscovm.todolist.databinding.AdditemFragmentBinding
 
@@ -23,12 +23,9 @@ import com.franciscovm.todolist.databinding.AdditemFragmentBinding
 class AddItemFragment : Fragment() {
 
     private var _binding: AdditemFragmentBinding? = null
-    private val viewModel: InventoryViewModel by activityViewModels {
-        InventoryViewModelFactory(
-            (activity ?.application as InventoryApplication).database.itemDao()
-        )
-    }
+    private val viewModel: InventoryViewModel by activityViewModels()
     lateinit var item: Item
+    private val navigationArgs : AddItemFragmentArgs by navArgs()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -37,7 +34,7 @@ class AddItemFragment : Fragment() {
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = AdditemFragmentBinding.inflate(inflater, container, false)
         return binding.root
 
@@ -46,6 +43,10 @@ class AddItemFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showKeyboard()
+
+        if (navigationArgs.itemDate != "" ){
+            Toast.makeText(context,"date = ${navigationArgs.itemDate}",Toast.LENGTH_SHORT).show()
+        }
 
         binding.outlinedButton.setOnClickListener {
             addNewItem()
@@ -69,8 +70,9 @@ class AddItemFragment : Fragment() {
 
     fun addNewItem() {
         if (isEntryValid()){
-            viewModel.addNewEntry(
-                binding.addText.text.toString()
+            viewModel.saveOnFirebase(
+                binding.addText.text.toString(),
+                requireContext()
             )
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }

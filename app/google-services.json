@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "51520918696",
+    "firebase_url": "https://todo-list-fvm-default-rtdb.firebaseio.com",
     "project_id": "todo-list-fvm",
     "storage_bucket": "todo-list-fvm.appspot.com"
   },

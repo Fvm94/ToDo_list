@@ -10,7 +10,6 @@
         android:name="com.franciscovm.todolist.HomeFragment"
         android:label="@string/home_fragment_label"
         tools:layout="@layout/fragment_home">
-
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/AddItemFragment" />
@@ -20,7 +19,9 @@
         android:name="com.franciscovm.todolist.AddItemFragment"
         android:label="@string/add_item_fragment_label"
         tools:layout="@layout/additem_fragment">
-
+        <argument
+            android:name="item_date"
+            app:argType="string"/>
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/HomeFragment" />

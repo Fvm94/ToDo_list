@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Widget.Material3.CardView.Outlined"
     android:layout_margin="2dp"
-    app:strokeColor="@color/material_dynamic_tertiary50"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/item_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:fontFamily="sans-serif"
         android:textSize="40sp"
-        android:textColor="@color/material_dynamic_tertiary50"
-        tools:text="Cogs and Widgets" />
-</com.google.android.material.card.MaterialCardView>
+        android:text=""/>
+</androidx.cardview.widget.CardView>

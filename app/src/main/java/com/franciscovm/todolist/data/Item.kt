@@ -1,13 +1,11 @@
 package com.franciscovm.todolist.data
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import java.io.Serializable
 
-@Entity
 data class Item(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    @ColumnInfo(name = "item")
-    val item: String
-)
+    val date:String,
+    val note:String,
+    val path:String,
+): Serializable {
+    constructor():this("","","")
+}

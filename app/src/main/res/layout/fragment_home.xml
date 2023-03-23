@@ -7,30 +7,34 @@
     android:padding="8dp"
     tools:context=".HomeFragment">
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/home_note"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UseCompoundDrawables">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/notepad"/>
-        <TextView
+            android:contentDescription="TODO"
+            android:src="@drawable/notepad" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/homeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:textSize="30sp"
             android:gravity="center"
-            android:text="Sem notas, crie uma nota agora "/>
+            android:text="Sem notas, crie uma nota agora "
+            android:textSize="30sp" />
 
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/home_recyclerview"
@@ -43,17 +47,16 @@
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab"
-        style="@style/ShapeAppearanceOverlay.Material3.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="32dp"
-        android:contentDescription="TODO"
-        app:backgroundTint="@color/material_dynamic_tertiary50"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Add"
+        android:textColor="@color/white"
         app:icon="@drawable/ic_add_24dp_white"
         app:iconTint="@color/white"
-        android:text="Adicionar"
-        android:textColor="@color/white"/>
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
