@@ -21,7 +21,9 @@
         tools:layout="@layout/additem_fragment">
         <argument
             android:name="item_date"
-            app:argType="string"/>
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/HomeFragment" />

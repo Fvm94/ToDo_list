@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia.ImageAndVideo.equals
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -36,6 +35,7 @@ class AddItemFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View {
         _binding = AdditemFragmentBinding.inflate(inflater, container, false)
+
         return binding.root
 
     }
@@ -44,14 +44,16 @@ class AddItemFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         showKeyboard()
 
-        if (navigationArgs.itemDate != "" ){
-            Toast.makeText(context,"date = ${navigationArgs.itemDate}",Toast.LENGTH_SHORT).show()
+
+
+        if (navigationArgs.itemDate != null){
+            binding.addText.setText(navigationArgs.itemDate.toString())
         }
 
         binding.outlinedButton.setOnClickListener {
             addNewItem()
         }
-        binding.addText.setOnEditorActionListener { v, actionId, event ->
+        binding.addText.setOnEditorActionListener { _, actionId, _->
             return@setOnEditorActionListener when (actionId){
                 EditorInfo.IME_ACTION_GO->{
                     addNewItem()
@@ -68,7 +70,7 @@ class AddItemFragment : Fragment() {
         return viewModel.isEntryValid(binding.addText.text.toString())
     }
 
-    fun addNewItem() {
+    private fun addNewItem() {
         if (isEntryValid()){
             viewModel.saveOnFirebase(
                 binding.addText.text.toString(),

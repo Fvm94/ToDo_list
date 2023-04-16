@@ -8,6 +8,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.franciscovm.todolist.data.Item
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.FirebaseUserMetadata
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -17,23 +21,28 @@ import java.time.format.DateTimeFormatter
 
 private const val error_tag = "ViewModelError"
 
-class InventoryViewModel() : ViewModel() {
+class InventoryViewModel : ViewModel() {
 
-    private val fireStore = Firebase.firestore.collection("user")
+    private val userID = Firebase.auth.currentUser!!.email
+    private val fireStore = Firebase.firestore
     private var list: MutableLiveData<List<Item>> = MutableLiveData()
 
-    val queryDirection = Query.Direction.ASCENDING
-    val fieldFilter = "date"
+    private val queryDirection = Query.Direction.DESCENDING
+    private val fieldFilter = "date"
 
     val lista: LiveData<List<Item>> = getFromFirebase()
     private fun getFromFirebase(): LiveData<List<Item>> {
         viewModelScope.launch {
-            fireStore.orderBy(fieldFilter, queryDirection)
+            fireStore
+                .collection(userID.toString())
+                .orderBy(fieldFilter, queryDirection)
                 .addSnapshotListener { value, error ->
                     if (error != null) {
                         Log.e(error_tag, error.message.toString())
                     }
-                    list.value = value!!.toObjects(Item::class.java)
+                    if (value != null) {
+                        list.value = value.toObjects(Item::class.java)
+                    }
                 }
 
         }
@@ -41,7 +50,7 @@ class InventoryViewModel() : ViewModel() {
     }
 
     private fun addToFirebase(item: Item, context: Context) {
-        fireStore.document(item.path).set(item).addOnSuccessListener {
+        fireStore.collection(userID.toString()).document(item.path).set(item).addOnSuccessListener {
             Toast.makeText(context, "Saved on Firebase", Toast.LENGTH_SHORT).show()
         }
 
@@ -52,7 +61,7 @@ class InventoryViewModel() : ViewModel() {
         val formatData = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         val current = LocalDateTime.now().format(formatData)
 
-        return Item(current, note, fireStore.document().id)
+        return Item(current, note, fireStore.collection(userID.toString()).document().id)
     }
 
     fun saveOnFirebase(note: String, context: Context) {

@@ -18,13 +18,16 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/add_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:imeOptions="actionGo"
+            android:hint="@string/add"
+            android:lines="1"/>
 
          <!--   android:focusedByDefault="true"
             android:textSize="20sp"
             android:inputType="textCapWords"
             android:textColor="@color/material_dynamic_neutral90"
-            android:imeOptions="actionGo"
+
             android:singleLine="true" -->
 
 
